@@ -1,0 +1,4 @@
+enum NotificationMessage {
+  commentaire,
+  rate,
+}
