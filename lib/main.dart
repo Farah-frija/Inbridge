@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:inbridge/Models/User.dart';
-import 'package:inbridge/test/widget_test.dart';
+import 'package:inbridge/core/services/services.dart';
+import 'package:inbridge/routes.dart';
+import 'package:inbridge/test/auth/login/presentation/views/login.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initialServices();
   runApp(TabBarDemo());
 }
 
 class TabBarDemo extends StatelessWidget {
   TabBarDemo({super.key});
-  TextEditingController? controller;
+
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-        home: Scaffold(
-      body: MyCarouselSlider(),
-    ));
+    return GetMaterialApp(getPages: routes, home: Login());
   }
 }
 /*import 'package:flutter/material.dart';

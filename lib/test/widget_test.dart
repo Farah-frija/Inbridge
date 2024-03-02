@@ -1,7 +1,7 @@
 // Carousel Slider ( Part 1)
 
 import 'package:flutter/material.dart';
-import 'package:inbridge/Models/User.dart';
+import 'package:inbridge/test/Models/User.dart';
 
 class MyCarouselSlider extends StatefulWidget {
   const MyCarouselSlider({super.key});
