@@ -12,7 +12,11 @@ class CustomTextField extends StatelessWidget {
       required this.isPassword,
       required this.textController,
       required this.valid,
-      required this.isNumber});
+      required this.isNumber,
+      this.visible,
+      this.setVisible});
+  final Function()? setVisible;
+  final bool? visible;
   final String? Function(String?) valid;
   final String hint;
   final bool isPassword;
@@ -26,7 +30,7 @@ class CustomTextField extends StatelessWidget {
           ? const TextInputType.numberWithOptions(decimal: true)
           : TextInputType.text,
       validator: valid,
-      obscureText: isPassword ? !controller.visible : false,
+      obscureText: isPassword && visible != null ? !visible! : false,
       controller: textController,
       decoration: InputDecoration(
         hintText: hint,
@@ -39,9 +43,7 @@ class CustomTextField extends StatelessWidget {
         hintStyle: khint,
         suffixIcon: isPassword
             ? IconButton(
-                onPressed: () {
-                  controller.setVisible();
-                },
+                onPressed: setVisible != null ? setVisible : null,
                 icon: controller.visible
                     ? Icon(Icons.visibility)
                     : Icon(Icons.visibility_off),

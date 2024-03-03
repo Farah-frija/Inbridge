@@ -1,22 +1,24 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:inbridge/test/auth/AddUser/AddUserController.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class Camera {
+  Camera(this.update);
   final picker = ImagePicker();
   File? _imageFile;
-  late Function(CroppedFile) updateImageCallback;
-  void setUpdateImageCallback(Function(CroppedFile) callback) {
-    updateImageCallback = callback;
-  }
+  Function(File?) update;
 
   _imgFromGallery() async {
     await picker
         .pickImage(source: ImageSource.gallery, imageQuality: 50)
         .then((value) {
       if (value != null) {
+        print("sucss2");
         _cropImage(File(value.path));
       }
     });
@@ -27,6 +29,7 @@ class Camera {
         .pickImage(source: ImageSource.camera, imageQuality: 50)
         .then((value) {
       if (value != null) {
+        print("success1");
         _cropImage(File(value.path));
       }
     });
@@ -65,12 +68,11 @@ class Camera {
           )
         ]);
     if (croppedFile != null) {
+      print("prssed");
       imageCache.clear();
-      updateImageCallback(croppedFile);
-      /*setState(() {
-        imageFile = File(croppedFile.path);*/
-
-      // reload();
+      update(File(croppedFile.path));
+    } else {
+      print("not pressed");
     }
   }
 
@@ -81,6 +83,7 @@ class Camera {
     ].request();
     if (statuses[Permission.storage]!.isGranted &&
         statuses[Permission.camera]!.isGranted) {
+      print("success");
       showImagePicker(context);
     } else {
       print('no permission provided');

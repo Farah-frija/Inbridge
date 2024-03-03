@@ -5,36 +5,33 @@ import 'package:inbridge/core/constant/Themes/Colors/colors.dart';
 
 const borderColor = KRoseFonce;
 
-class Avatar extends StatefulWidget {
-  Avatar({
-    Key? key,
-    this.icon,
-    required this.image,
-    this.photo,
-    this.color,
-    required this.radius,
-    required this.border,
-  }) : super(key: key);
+class Avatar extends StatelessWidget {
+  Avatar(
+      {Key? key,
+      this.icon,
+      required this.image,
+      this.photo,
+      this.color,
+      required this.radius,
+      required this.border,
+      this.takePic})
+      : super(key: key);
   final IconData? icon;
   final bool image;
   final File? photo;
   final Color? color;
   final double radius;
   final bool border;
+  final Function()? takePic;
 
-  @override
-  _AvatarState createState() => _AvatarState();
-}
-
-class _AvatarState extends State<Avatar> {
   String defaultImage =
       "https://th.bing.com/th/id/OIP.jfO-lSCNvMeuSaU5VzYYvgHaE7?rs=1&pid=ImgDetMain";
 
   @override
   Widget build(BuildContext context) {
-    final double borderWidth = widget.border ? 3 : 0;
+    final double borderWidth = border ? 3 : 0;
     final BorderStyle borderstyle =
-        widget.border ? BorderStyle.solid : BorderStyle.none;
+        border ? BorderStyle.solid : BorderStyle.none;
 
     return Container(
       decoration: BoxDecoration(
@@ -46,13 +43,13 @@ class _AvatarState extends State<Avatar> {
         ),
       ),
       child: GestureDetector(
-        onTap: () {},
+        onTap: takePic,
         child: CircleAvatar(
-          radius: widget.radius,
+          radius: radius,
           backgroundImage: _getProfileImage(),
-          backgroundColor: widget.color,
+          backgroundColor: color,
           child: Icon(
-            widget.icon,
+            icon,
             color: kwhite,
             size: 19,
           ),
@@ -62,11 +59,11 @@ class _AvatarState extends State<Avatar> {
   }
 
   ImageProvider<Object>? _getProfileImage() {
-    if (widget.image) {
-      if (widget.photo == null) {
+    if (image) {
+      if (photo == null) {
         return NetworkImage(defaultImage);
       } else {
-        return FileImage(widget.photo!);
+        return FileImage(photo!);
       }
     }
     return null;

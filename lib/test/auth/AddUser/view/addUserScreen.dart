@@ -1,25 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/get_instance.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:inbridge/core/Functions/AlertQuit.dart';
-import 'package:inbridge/core/Functions/validateInput.dart';
-import 'package:inbridge/core/Utils/Enums/inputType.dart';
 import 'package:inbridge/core/constant/Themes/Colors/colors.dart';
-import 'package:inbridge/core/constant/images/images.dart';
-import 'package:inbridge/test/auth/login/presentation/getx/loginController.dart';
-import 'package:inbridge/test/auth/login/presentation/views/ForgotPassword.dart';
-import 'package:inbridge/test/auth/login/presentation/widgets/Backtopage.dart';
-import 'package:inbridge/test/auth/login/presentation/widgets/CustomTextField.dart';
+import 'package:inbridge/test/Widgets/ChangePhoto.dart';
+import 'package:inbridge/test/auth/AddUser/AddUserController.dart';
 
-import 'package:inbridge/test/auth/login/presentation/widgets/LoginButton.dart';
-import 'package:inbridge/test/auth/login/presentation/widgets/Logo.dart';
-
-class Login extends StatelessWidget {
-  const Login({super.key});
+class AddUseScreen extends StatelessWidget {
+  const AddUseScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    LoginControllerImp controller = Get.put(LoginControllerImp());
+    AddUseController controller = Get.put(AddUseController());
 
     return SafeArea(
         child: Scaffold(
@@ -32,21 +25,19 @@ class Login extends StatelessWidget {
         onWillPop: alertExitApp,
         child: Form(
           key: controller.formstate,
-          child: Center(
-            child: SingleChildScrollView(
+          child: SingleChildScrollView(
+            child: Center(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 50),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    Center(
-                      child: Logo(),
+                    GetBuilder<AddUseController>(
+                      builder: (controller) => ChangeCamera(
+                          imageFile: controller.imageFile,
+                          onpressed: controller.cam!.update),
                     ),
-                    SizedBox(height: 30.0),
+                    /*SizedBox(height: 30.0),
                     CustomTextField(
-                      visible: controller.visible,
-                      setVisible: controller.setVisible(),
                       isNumber: false,
                       valid: (val) {
                         return validInput(
@@ -59,10 +50,6 @@ class Login extends StatelessWidget {
                     SizedBox(height: 20.0),
                     GetBuilder<LoginControllerImp>(
                         builder: (controller) => CustomTextField(
-                              visible: controller.visible,
-                              setVisible: () {
-                                controller.setVisible();
-                              },
                               valid: (val) {
                                 return validInput(
                                     val: val!,
@@ -82,13 +69,7 @@ class Login extends StatelessWidget {
                         controller.login();
                       },
                     ),
-                    SizedBox(height: 30.0),
-                    BackToPage(
-                      text: 'Forgot Password?',
-                      onpressed: () {
-                        controller.goToForgetPassword();
-                      },
-                    ),
+                    SizedBox(height: 30.0),*/
                   ],
                 ),
               ),
