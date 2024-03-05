@@ -6,7 +6,7 @@ import 'package:inbridge/core/constant/Themes/Colors/colors.dart';
 
 Future<bool> alertExitApp() {
   Get.defaultDialog(
-      title: "تنبيه",
+      title: "Alert",
       titleStyle:
           const TextStyle(color: KRoseFonce, fontWeight: FontWeight.bold),
       middleText: "Do you want to quit the app ?",
@@ -17,14 +17,14 @@ Future<bool> alertExitApp() {
             onPressed: () {
               exit(0);
             },
-            child: const Text("تاكيد")),
+            child: const Text("Quit")),
         ElevatedButton(
             style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(KRoseFonce)),
             onPressed: () {
               Get.back();
             },
-            child: const Text("الغاء"))
+            child: const Text("Delete"))
       ]);
   return Future.value(true);
 }

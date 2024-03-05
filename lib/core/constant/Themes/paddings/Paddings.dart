@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:inbridge/test/Widgets/NextButton.dart';
 
 const double KnextButtonRadius = 5;
 

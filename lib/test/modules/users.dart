@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:inbridge/test/modules/notification/model/Notification.dart';
+
 import 'package:inbridge/test/Models/User.dart';
-import 'package:inbridge/test/Widgets/Notifuser.dart';
-import 'package:inbridge/test/Widgets/UserTile.dart';
+import 'package:inbridge/core/Widgets/UserTile.dart';
 
 class Users extends StatefulWidget {
   const Users({super.key});

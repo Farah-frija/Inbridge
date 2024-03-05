@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:inbridge/core/services/services.dart';
 import 'package:inbridge/routes.dart';
-import 'package:inbridge/test/auth/AddUser/view/addUserScreen.dart';
-
-import 'package:inbridge/test/auth/login/presentation/views/login.dart';
+import 'package:inbridge/features/auth/AddUser/View/addUserScreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
