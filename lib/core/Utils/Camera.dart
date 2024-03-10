@@ -4,7 +4,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:inbridge/features/auth/AddUser/Controller/AddUserController.dart';
+import 'package:inbridge/Sprints/auth/AddUser/Controller/AddUserController.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class Camera {

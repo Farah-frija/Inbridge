@@ -1,8 +1,8 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
+import 'package:inbridge/Sprints/auth/login/Views/ForgotPassword.dart';
+import 'package:inbridge/Sprints/auth/login/Views/PasswordSuccess.dart';
+import 'package:inbridge/Sprints/auth/login/Views/loginScreen.dart';
 import 'package:inbridge/core/constant/Approutes.dart';
-import 'package:inbridge/features/auth/login/Views/ForgotPassword.dart';
-import 'package:inbridge/features/auth/login/Views/PasswordSuccess.dart';
-import 'package:inbridge/features/auth/login/Views/login.dart';
 
 List<GetPage<dynamic>>? routes = [
   GetPage(

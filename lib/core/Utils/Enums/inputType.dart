@@ -9,6 +9,7 @@ enum InputType {
   institute,
   sexe,
   diplome,
-  dob,
-  photo
+  dateOfBirth,
+  photo,
+  adresse
 }

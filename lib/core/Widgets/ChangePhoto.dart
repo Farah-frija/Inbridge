@@ -7,12 +7,12 @@ import 'package:get/get_instance/get_instance.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:inbridge/Sprints/auth/AddUser/Controller/AddUserController.dart';
 import 'package:inbridge/test/Models/User.dart';
 import 'package:inbridge/core/constant/Themes/Colors/colors.dart';
 import 'package:inbridge/core/constant/Themes/Icons/icons.dart';
 import 'package:inbridge/core/Utils/Camera.dart';
 import 'package:inbridge/core/Widgets/CircleAvatar.dart';
-import 'package:inbridge/features/auth/AddUser/Controller/AddUserController.dart';
 
 class ChangeCamera extends StatelessWidget {
   final ImagePicker _picker = ImagePicker();
