@@ -1,16 +1,12 @@
 # inbridge
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+each feachure is a sprint
+for example the auth feature
+for each usecase there is an mvc 
+for registration
+modify user
+login 
+...
+and data apis functions to use apis , input validations etc 
+in the network layer you find things that will be used for the hole app connection to backend results from backend etc 
+you find roots in the lib folder services middleware ...
+constants ....
