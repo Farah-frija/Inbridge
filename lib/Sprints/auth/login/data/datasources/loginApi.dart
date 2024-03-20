@@ -26,7 +26,8 @@ class LoginApi {
             print("Error: Not Found");
             return Left(StatusRequest.notFound);
           }
-
+          print("haw lena");
+          print(jsonDecode(response.body).runtimeType);
           String errorMessage = jsonDecode(response.body);
 
           switch (errorMessage) {

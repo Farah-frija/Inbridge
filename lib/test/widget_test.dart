@@ -1,4 +1,4 @@
-// Carousel Slider ( Part 1)
+/*// Carousel Slider ( Part 1)
 
 import 'package:flutter/material.dart';
 import 'package:inbridge/test/Models/User.dart';
@@ -100,3 +100,4 @@ class _MyCarouselSliderState extends State<MyCarouselSlider>
         )));
   }
 }
+*/

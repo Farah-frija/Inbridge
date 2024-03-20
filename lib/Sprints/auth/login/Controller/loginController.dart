@@ -20,15 +20,13 @@ LoginData loginData = LoginData(LoginApi());
 class LoginControllerImp extends LoginController {
   late TextEditingController email;
   late TextEditingController password;
-  late bool visible;
+  late RxBool visible = false.obs; // Using RxBool for reactivity
   GlobalKey<FormState> formstate = GlobalKey<FormState>();
 
-  @override
   @override
   void onInit() {
     email = TextEditingController();
     password = TextEditingController();
-    visible = false;
     super.onInit();
   }
 
@@ -44,27 +42,32 @@ class LoginControllerImp extends LoginController {
     Get.offAllNamed(AppRoute.forgotPassword);
   }
 
+  goToVerifyEmail() {
+    Get.toNamed(AppRoute.VerifyEmail);
+  }
+
   setVisible() {
-    print(visible);
-    visible = !visible;
-    update();
+    print(visible.value); // Accessing value property of RxBool
+    visible.value = !visible.value; // Changing value using .value property
+    update(); // Triggering UI update
   }
 
   MyServices myServices = Get.find();
 
-  StatusRequest statusRequest = StatusRequest.none;
+  Rx<StatusRequest> statusRequest =
+      StatusRequest.none.obs; // Using Rx for reactivity
   login() async {
     if (formstate.currentState!.validate()) {
       LoginModel loginModel = LoginModel(
         email: email.value.text,
         motdepasse: password.value.text,
       );
-      statusRequest = StatusRequest.loading;
-      update();
+      statusRequest.value = StatusRequest.loading;
+
       var response = await loginData.postdata(loginModel);
       print("=============================== Controller $response ");
-      statusRequest = handlingData(response);
-      update();
+      statusRequest.value = handlingData(response);
+
       if (statusRequest == StatusRequest.success) {
         // data.addAll(response['data']);
         myServices.sharedPreferences.setString("id", response['_id']);
@@ -95,9 +98,9 @@ class LoginControllerImp extends LoginController {
         myServices.sharedPreferences.setString("step", "2");
       } else {
         String errorMessage = "";
-        switch (statusRequest) {
-          case StatusRequest.invalidEmailAndPassword:
-            errorMessage = "Invalid email and password";
+        switch (statusRequest.value) {
+          case StatusRequest.wrongMotdepasse:
+            errorMessage = "Wrong password password";
             break;
 
           case StatusRequest.accountBlocked:

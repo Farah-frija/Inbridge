@@ -8,7 +8,7 @@ class AddUserData {
   AddUserApi api;
   AddUserData(this.api);
   postdata(AddUserModel model) async {
-    var response = await api.postData(AppLink.login, model);
+    var response = await api.postData(AppLink.signUp, model);
     return response.fold((l) => l, (r) => r);
   }
 }

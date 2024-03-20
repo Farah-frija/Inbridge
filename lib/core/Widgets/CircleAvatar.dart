@@ -14,6 +14,7 @@ class Avatar extends StatelessWidget {
       this.color,
       required this.radius,
       required this.border,
+      this.stringImage,
       this.takePic})
       : super(key: key);
   final IconData? icon;
@@ -23,12 +24,15 @@ class Avatar extends StatelessWidget {
   final double radius;
   final bool border;
   final Function()? takePic;
-
-  String defaultImage =
-      "https://th.bing.com/th/id/OIP.jfO-lSCNvMeuSaU5VzYYvgHaE7?rs=1&pid=ImgDetMain";
-
+  final String? stringImage;
+  String? defaultImage;
   @override
   Widget build(BuildContext context) {
+    if (stringImage == null)
+      defaultImage =
+          "https://th.bing.com/th/id/OIP.jfO-lSCNvMeuSaU5VzYYvgHaE7?rs=1&pid=ImgDetMain";
+    else
+      defaultImage = stringImage!;
     final double borderWidth = border ? 3 : 0;
     final BorderStyle borderstyle =
         border ? BorderStyle.solid : BorderStyle.none;
@@ -61,7 +65,10 @@ class Avatar extends StatelessWidget {
   ImageProvider<Object>? _getProfileImage() {
     if (image) {
       if (photo == null) {
-        return NetworkImage(defaultImage);
+        return NetworkImage(
+          defaultImage!,
+          scale: 1.0,
+        );
       } else {
         return FileImage(photo!);
       }

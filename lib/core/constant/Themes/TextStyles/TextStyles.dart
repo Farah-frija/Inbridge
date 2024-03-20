@@ -45,6 +45,8 @@ const ktitleName = TextStyle(
 const ksubtitle = TextStyle(
   fontFamily: kfont,
   fontSize: 12,
+  fontWeight: FontWeight.w200,
+  color: Color.fromARGB(255, 140, 137, 137),
 );
 const kpage = TextStyle(
   fontSize: 16,

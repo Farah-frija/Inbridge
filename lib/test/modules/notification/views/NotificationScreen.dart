@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+/*import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:inbridge/test/modules/notification/model/Notification.dart';
 import 'package:inbridge/core/Widgets/Notifuser.dart';
@@ -24,3 +24,4 @@ class _NotificationScreenState extends State<NotificationScreen> {
         });
   }
 }
+*/

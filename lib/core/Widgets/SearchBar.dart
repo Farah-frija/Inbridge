@@ -4,20 +4,16 @@ import 'package:inbridge/core/constant/Themes/Icons/icons.dart';
 import 'package:inbridge/core/constant/Themes/paddings/Paddings.dart';
 import 'package:inbridge/core/constant/Themes/TextStyles/TextStyles.dart';
 
-class MySearchBar extends StatefulWidget {
+class MySearchBar extends StatelessWidget {
   final TextEditingController? controller;
 
-  MySearchBar({required this.controller});
-
-  @override
-  _MySearchBarState createState() => _MySearchBarState();
-}
-
-class _MySearchBarState extends State<MySearchBar> {
+  MySearchBar({required this.controller, this.onchanged});
+  Function(String)? onchanged;
   @override
   Widget build(BuildContext context) {
     return TextField(
-      controller: widget.controller,
+      controller: controller,
+      onChanged: onchanged,
       decoration: InputDecoration(
         contentPadding: kSearchPadding,
         filled: true,
@@ -28,7 +24,9 @@ class _MySearchBarState extends State<MySearchBar> {
           size: 24,
         ),
         suffixIcon: GestureDetector(
-          onTap: () {},
+          onTap: () {
+            // Handle filter functionality here
+          },
           child: KFilterIcon,
         ),
         hintText: 'Search',

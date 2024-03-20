@@ -1,10 +1,14 @@
 class AppLink {
-  static const String server = "http://192.168.1.6:8000/api/auth";
+  static const String server = "http://192.168.1.2:8000";
 
 // ================================= Auth ========================== //
 
-  static const String signUp = "$server/register/";
-  static const String login = "$server/login/";
+  static const String signUp = "$server/api/auth/register/";
+  static const String login = "$server/api/auth/login/";
+  static const String getAllUsers = "$server/api/users/";
+  static const String UpdateUserState = "$server/api/users/";
 
-// ================================= ForgetPassword ========================== //
+// ================================= TaskManagement ========================== //
+
+  static const String getAllCategories = "$server/api/categorie/";
 }

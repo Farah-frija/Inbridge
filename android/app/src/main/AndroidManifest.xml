@@ -6,7 +6,10 @@
     <application
         android:label="inbridge"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:autoVerify="true"
+        >
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -27,6 +30,20 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            <intent-filter android:autoVerify="true">
+  <action android:name="android.intent.action.VIEW" />
+  <category android:name="android.intent.category.DEFAULT" />
+  <category android:name="android.intent.category.BROWSABLE" />
+
+   <data
+            android:scheme="http"
+            android:host="localhost"
+            android:port="8000" />
+
+        <!-- Define your path pattern with placeholders for dynamic parts -->
+        <data android:pathPattern="/api/auth/.*verify/.*" />
+      
+</intent-filter>
         </activity>
           <activity
            android:name="com.yalantis.ucrop.UCropActivity"

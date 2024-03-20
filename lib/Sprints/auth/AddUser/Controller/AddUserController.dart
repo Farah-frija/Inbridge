@@ -1,11 +1,10 @@
-// image_controller.dart
-
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:inbridge/Sprints/auth/AddUser/data/datasources/AddUserApi.dart';
 import 'package:inbridge/Sprints/auth/AddUser/data/datasources/RegisterData.dart';
 import 'package:inbridge/Sprints/auth/AddUser/data/models/AddUserModel.dart';
+import 'package:inbridge/Sprints/auth/Functions/validateInput.dart';
 
 import 'package:inbridge/core/Utils/Camera.dart';
 
@@ -13,7 +12,7 @@ import 'package:inbridge/core/network/handlingData.dart';
 import 'package:inbridge/core/network/networkHandler.dart';
 
 class AddUseController extends GetxController {
-  File? imageFile;
+  Rx<File?> imageFile = Rx<File?>(null);
   Camera? cam;
   late TextEditingController email;
   late TextEditingController password;
@@ -23,18 +22,18 @@ class AddUseController extends GetxController {
   late TextEditingController familyName;
   late TextEditingController userName;
   late TextEditingController adresse;
-  late String sexe;
-  late bool visible;
-  late bool validePhoto;
-  late bool validDate;
-  late bool validForm;
-  late DateTime dateOfBirth;
-  late StatusRequest statusRequest = StatusRequest.none;
+  RxString sexe = "homme".obs;
+  RxBool visible = false.obs;
+  RxBool validePhoto = false.obs;
+  RxBool validDate = false.obs;
+  RxBool validForm = false.obs;
+  Rx<DateTime> dateOfBirth = DateTime(2002, 8, 25).obs;
+  Rx<StatusRequest> statusRequest = StatusRequest.none.obs;
   GlobalKey<FormState> formstate = GlobalKey<FormState>();
   AddUserData loginData = AddUserData(AddUserApi());
+
   @override
   void onInit() {
-    visible = false;
     email = TextEditingController();
     password = TextEditingController();
     phoneNumber = TextEditingController();
@@ -43,17 +42,16 @@ class AddUseController extends GetxController {
     familyName = TextEditingController();
     userName = TextEditingController();
     adresse = TextEditingController();
-    sexe = "homme";
-    validForm = false;
-    dateOfBirth = DateTime(2002, 8, 25);
-    bool validePhoto = false;
-    bool valideDate = false;
     cam = Camera(updateimage);
+    validePhoto = false.obs;
+    validDate = false.obs;
+    validForm = false.obs;
 
     super.onInit();
   }
 
-  void dispose() {
+  @override
+  void onClose() {
     email.dispose();
     password.dispose();
     phoneNumber.dispose();
@@ -61,69 +59,73 @@ class AddUseController extends GetxController {
     name.dispose();
     familyName.dispose();
     userName.dispose();
-
-    super.dispose();
+    super.onClose();
   }
 
   void updateimage(File? image) {
-    imageFile = image;
-    update();
+    imageFile.value = image;
   }
 
   void updateSexe(String value) {
-    sexe = value;
-    update();
+    sexe.value = value;
   }
 
-  void updateDateOfBith(DateTime value) {
-    dateOfBirth = value;
-    update();
+  void updateDateOfBirth(DateTime value) {
+    dateOfBirth.value = value;
   }
 
-  AddUser() async {
+  void addUser() async {
     if (formstate.currentState!.validate()) {
-      statusRequest = StatusRequest.loading;
-      update();
-      AddUserModel addUserModel = AddUserModel(
-        email: email.value.text.trim(),
-        pseudo: userName.text.trim(),
-        cin: int.parse(cin.text.trim()),
-        sexe: sexe,
-        adresse: adresse.text.trim(),
-        numeroDeTel: int.parse(phoneNumber.value.text.trim()),
-        dateDeNaissance: dateOfBirth,
-        nom: familyName.text.trim(),
-        prenom: name.text.trim(),
-      );
-      statusRequest = StatusRequest.loading;
-      update();
-      var response = await loginData.postdata(addUserModel);
-      print("=============================== Controller $response ");
-      statusRequest = handlingData(response);
-      update();
-      if (statusRequest == StatusRequest.success) {
-      } else {
-        String errorMessage = "";
-        switch (statusRequest) {
-          case StatusRequest.existent:
-            errorMessage = "existent user";
-            break;
+      validForm.value = true;
+      if (validPhoto(imageFile.value)) {
+        validePhoto.value = true;
+      }
+      if (validePhoto.value) {
+        statusRequest.value = StatusRequest.loading;
 
-          case StatusRequest.notFound:
-            errorMessage = "this email doesn't exist";
-            break;
-          case StatusRequest.invalidinfo:
-            errorMessage = "wrong entries";
-            break;
+        AddUserModel addUserModel = AddUserModel(
+          email: email.text.trim(),
+          pseudo: userName.text.trim(),
+          cin: int.parse(cin.text.trim()),
+          sexe: sexe.value,
+          adresse: adresse.text.trim(),
+          numeroDeTel: int.parse(phoneNumber.text.trim()),
+          dateDeNaissance: dateOfBirth.value,
+          nom: familyName.text.trim(),
+          prenom: name.text.trim(),
+          photoDeProfile: imageFile.value!,
+        );
+        statusRequest.value = StatusRequest.loading;
 
-          default:
-            if (StatusRequest.serverFailure == statusRequest) {
+        var response = await loginData.postdata(addUserModel);
+        print("=============================== Controller  ");
+        print(addUserModel.photoDeProfile == null);
+
+        statusRequest.value = handlingData(response);
+        String title = "Success";
+        String errorMessage =
+            "A verification email was sent to this content creator";
+        if (statusRequest.value != StatusRequest.success) {
+          title = "warning";
+
+          switch (statusRequest.value) {
+            case StatusRequest.existent:
+              errorMessage = "existent user";
+              break;
+
+            case StatusRequest.notFound:
+              errorMessage = "this email doesn't exist";
+              break;
+            case StatusRequest.invalidinfo:
+              errorMessage = "wrong entries";
+              break;
+
+            default:
               errorMessage = "An error has occured";
-            }
+          }
         }
-
         Get.defaultDialog(
-          title: "Warning",
+          title: title,
           middleText: errorMessage,
           onConfirm: () {
             Get.back();

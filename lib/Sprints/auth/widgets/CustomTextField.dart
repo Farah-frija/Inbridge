@@ -14,7 +14,8 @@ class CustomTextField extends StatelessWidget {
       required this.valid,
       required this.isNumber,
       this.visible,
-      this.setVisible});
+      this.setVisible,
+      this.initial});
   final Function()? setVisible;
   final bool? visible;
   final String? Function(String?) valid;
@@ -22,6 +23,7 @@ class CustomTextField extends StatelessWidget {
   final bool isPassword;
   final bool isNumber;
   final TextEditingController textController;
+  final String? initial;
   final LoginControllerImp controller = Get.put(LoginControllerImp());
   @override
   Widget build(BuildContext context) {
@@ -44,7 +46,7 @@ class CustomTextField extends StatelessWidget {
         suffixIcon: isPassword
             ? IconButton(
                 onPressed: setVisible != null ? setVisible : null,
-                icon: controller.visible
+                icon: controller.visible.value
                     ? Icon(Icons.visibility)
                     : Icon(Icons.visibility_off),
               )

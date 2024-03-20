@@ -17,7 +17,7 @@ class PasswordControllerImp extends PasswordController {
   verify() {
     var formdata = formstate.currentState;
     if (formdata!.validate()) {
-      Get.offAllNamed(AppRoute.SuccessPassword);
+      //Get.offAllNamed(AppRoute.SuccessPassword);
     } else {
       print("Not Valid");
     }

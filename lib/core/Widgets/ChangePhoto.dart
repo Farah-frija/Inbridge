@@ -8,7 +8,7 @@ import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:inbridge/Sprints/auth/AddUser/Controller/AddUserController.dart';
-import 'package:inbridge/test/Models/User.dart';
+
 import 'package:inbridge/core/constant/Themes/Colors/colors.dart';
 import 'package:inbridge/core/constant/Themes/Icons/icons.dart';
 import 'package:inbridge/core/Utils/Camera.dart';
@@ -28,7 +28,7 @@ class ChangeCamera extends StatelessWidget {
         child: Stack(children: [
           Avatar(
             image: true,
-            photo: controller.imageFile,
+            photo: controller.imageFile.value,
             radius: MediaQuery.of(context).size.width * 0.2 > 80
                 ? MediaQuery.of(context).size.width * 0.1
                 : MediaQuery.of(context).size.width * 0.18,

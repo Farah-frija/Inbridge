@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:inbridge/Sprints/auth/AddUser/View/addUserScreen.dart';
+import 'package:inbridge/Sprints/auth/Users/views/UsersListScreen.dart';
 import 'package:inbridge/Sprints/auth/login/Views/loginScreen.dart';
+import 'package:inbridge/Sprints/taskManagement/views/addTaskScreen.dart';
 import 'package:inbridge/core/services/services.dart';
 
 import 'package:inbridge/routes.dart';
 
+import 'core/Widgets/FilterUser.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initialServices();
+
   runApp(TabBarDemo());
 }
 
@@ -17,7 +22,7 @@ class TabBarDemo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(getPages: routes, home: AddUseScreen());
+    return GetMaterialApp(getPages: routes, home: AddTaskScreen());
   }
 }
 /*import 'package:flutter/material.dart';

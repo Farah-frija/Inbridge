@@ -1,112 +1,199 @@
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:inbridge/test/modules/notification/model/Notification.dart';
-import 'package:inbridge/test/Models/User.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:inbridge/Sprints/auth/Users/controller/OnlyOneUserController.dart';
+import 'package:inbridge/Sprints/auth/Users/controller/UsersController.dart';
+import 'package:inbridge/Sprints/auth/Users/model/UserModel.dart';
+import 'package:inbridge/Sprints/auth/linkApi.dart';
+import 'package:inbridge/core/Widgets/CircleAvatar.dart';
 import 'package:inbridge/core/constant/Themes/Colors/colors.dart';
 import 'package:inbridge/core/constant/Themes/TextStyles/TextStyles.dart';
-import 'package:inbridge/core/Widgets/CircleAvatar.dart';
 
-class UserTile extends StatefulWidget {
+class UserTile extends StatelessWidget {
+  final UsersControllerImp controller = Get.find();
   UserTile({required this.user});
-  User user;
-  @override
-  State<UserTile> createState() => _UserTileState();
-}
-
-class _UserTileState extends State<UserTile> {
-  late File? _image;
-  late String? _name;
-  late String? _description;
-  late bool _blocked;
-  late bool _admin;
-  late User _user;
-
-  @override
-  void initState() {
-    super.initState();
-    _user = widget.user;
-    _image = _user.photo;
-    _name = _user.userName;
-    _description = _user.description;
-    _admin = _user.admin;
-    _blocked = _user.blocked;
-  }
-
+  int user;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 30),
-      child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        _ProfileImage(
-          image: _image,
-          admin: _admin,
-        ),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 10, top: 3),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Adjust the spacing between the icon and text
-                Text(_name ?? "default name", style: ktitleName),
-                Text(_description ?? "default text", style: ksubtitle),
-              ],
+    print(controller.users.value[user].email);
+    return Obx(
+      () => Container(
+        //color: controller.Currentuser.value.verifie ? kgrey : kwhite,
+        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 30),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _ProfileImage(
+              image:
+                  "${AppLink.server}/${controller.users.value[user].photoDeProfile}",
+              verifie: controller.users.value[user].verifie,
+              role: controller.users.value[user].role,
             ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            children: [
-              Icon(
-                _blocked ? Icons.lock_outlined : Icons.lock_open,
-                size: 20,
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10, top: 3),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(controller.users.value[user].pseudo,
+                        style: ktitleName),
+                    Text(
+                        controller.users.value[user].verifie == false
+                            ? " not verified"
+                            : controller.users.value[user].bloque == true
+                                ? "blocked"
+                                : "actif",
+                        style: ksubtitle),
+                  ],
+                ),
               ),
-              SizedBox(width: 20),
-              Icon(
-                Icons.more_vert,
-                color: kblue,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                child: Row(
+                  children: [
+                    controller.users.value[user].verifie
+                        ? IconButton(
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  bool isBlocked =
+                                      controller.users.value[user].bloque;
+                                  return AlertDialog(
+                                    title: Text(isBlocked
+                                        ? 'Unblock User?'
+                                        : 'Block User?'),
+                                    content: Text(isBlocked
+                                        ? 'Are you sure you want to unblock this user?'
+                                        : 'Are you sure you want to block this user?'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context)
+                                              .pop(); // Close the dialog
+                                          controller.updateUserBloque(user);
+                                        },
+                                        child: Text(
+                                            isBlocked ? 'Unblock' : 'Block'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context)
+                                              .pop(); // Close the dialog
+                                        },
+                                        child: Text('Cancel'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            },
+                            icon: Obx(
+                              () => Icon(
+                                controller.users.value[user].bloque
+                                    ? Icons.lock_open
+                                    : Icons.lock_outline,
+                                size: 20,
+                              ),
+                            ))
+                        : differenceInDays(
+                                    controller.users.value[user].createdAt!) >=
+                                1
+                            ? IconButton(
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text('Delete unverified user?'),
+                                        content: Text(
+                                            "This user has been created  ${differenceInDays(controller.users.value[user].createdAt!)} day ago"),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context)
+                                                  .pop(); // Close the dialog
+                                            },
+                                            child: Text("Delete user"),
+                                          ),
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                              // Close the dialog
+                                            },
+                                            child: Text('Cancel'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                },
+                                icon: Icon(
+                                  Icons.delete,
+                                  size: 20,
+                                ))
+                            : SizedBox(),
+                    SizedBox(width: 20),
+                    Icon(
+                      Icons.more_vert,
+                      color: kblue,
+                    ),
+                  ],
+                ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-      ]),
+      ),
     );
   }
 }
 
 class _ProfileImage extends StatelessWidget {
-  _ProfileImage({required this.image, this.admin = false});
-  File? image;
-  bool admin;
-//todo prend comme parametres File image
+  _ProfileImage(
+      {required this.image, required this.verifie, required this.role});
+  String? image;
+  bool verifie;
+  String role;
+
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         Avatar(
           image: true,
-          photo: image,
+          stringImage: image,
           radius: 25,
-          border: admin ? true : false,
+          border: verifie ? true : true,
         ),
         Positioned(
-          right: 5,
-          bottom: 0,
-          child: admin
-              ? Avatar(
-                  image: false,
-                  border: false,
-                  color: KRoseFonce,
-                  icon: Icons.star,
-                  radius: 10,
-                )
-              : Container(),
-        ),
+            right: 5,
+            bottom: 0,
+            child: verifie
+                ? Avatar(
+                    image: false,
+                    border: false,
+                    color: KroseClair,
+                    icon: Icons.check,
+                    radius: 10,
+                  )
+                : Avatar(
+                    image: false,
+                    border: false,
+                    color: KRoseFonce,
+                    icon: Icons.sync_problem_outlined,
+                    radius: 10,
+                  )),
       ],
     );
   }
+}
+
+int differenceInDays(DateTime dateTime) {
+  final now = DateTime.now();
+  final difference = now.difference(dateTime);
+  return difference.inDays;
 }

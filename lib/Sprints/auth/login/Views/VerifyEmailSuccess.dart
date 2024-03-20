@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:inbridge/Sprints/auth/login/Controller/ForgotPasswordController.dart';
 import 'package:inbridge/Sprints/auth/login/Controller/SuccessPasswordController.dart';
+
 import 'package:inbridge/core/constant/Themes/Colors/colors.dart';
 import 'package:inbridge/core/constant/Themes/TextStyles/TextStyles.dart';
 
 import 'package:inbridge/Sprints/auth/widgets/LoginButton.dart';
 
-class SuccessPassword extends StatelessWidget {
-  const SuccessPassword({Key? key}) : super(key: key);
+class VerifyEmailSuccess extends StatelessWidget {
+  const VerifyEmailSuccess({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
