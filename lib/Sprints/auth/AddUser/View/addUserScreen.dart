@@ -143,30 +143,30 @@ class AddUseScreen extends StatelessWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Row(
-                                  children: <Widget>[
-                                    Radio(
-                                      value: "homme",
-                                      groupValue: controller.sexe.value,
-                                      onChanged: (value) {
-                                        controller.updateSexe(value!);
-                                      },
-                                    ),
-                                    Text('Homme'),
-                                  ],
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    Radio(
-                                      value: "femme",
-                                      groupValue: controller.sexe.value,
-                                      onChanged: (value) {
-                                        controller.updateSexe(value!);
-                                      },
-                                    ),
-                                    Text('femme'),
-                                  ],
-                                ),
+                                Obx(() => Row(
+                                      children: <Widget>[
+                                        Radio(
+                                          value: "homme",
+                                          groupValue: controller.sexe.value,
+                                          onChanged: (value) {
+                                            controller.updateSexe(value!);
+                                          },
+                                        ),
+                                        Text('Homme'),
+                                      ],
+                                    )),
+                                Obx(() => Row(
+                                      children: <Widget>[
+                                        Radio(
+                                          value: "femme",
+                                          groupValue: controller.sexe.value,
+                                          onChanged: (value) {
+                                            controller.updateSexe(value!);
+                                          },
+                                        ),
+                                        Text('femme'),
+                                      ],
+                                    )),
                               ],
                             ),
                             SizedBox(height: 30.0),
@@ -185,7 +185,7 @@ class AddUseScreen extends StatelessWidget {
                                 },
                               ),
                             ),
-                            SizedBox(height: 30.0),
+                            SizedBox(height: 50.0),
                           ],
                         ),
                       ),

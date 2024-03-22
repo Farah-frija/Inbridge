@@ -1,12 +1,12 @@
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:inbridge/core/middlewares/UrlMiddleWare.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 
 class MyServices extends GetxService {
-  late SharedPreferences sharedPreferences;
+  late StreamingSharedPreferences sharedPreferences;
   Future<MyServices> init() async {
-    sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences = await StreamingSharedPreferences.instance;
     return this;
   }
 }

@@ -1,5 +1,5 @@
 class AppLink {
-  static const String server = "http://192.168.1.2:8000";
+  static const String server = "http://192.168.1.6:8000";
 
 // ================================= Auth ========================== //
 
@@ -10,5 +10,7 @@ class AppLink {
 
 // ================================= TaskManagement ========================== //
 
-  static const String getAllCategories = "$server/api/categorie/";
+  static const String getAllCategories = "$server/api/categories/";
+  static const String addTask = "$server/api/tasks/addtask";
+  static const String updateTaskState = "$server/api/taskState/";
 }

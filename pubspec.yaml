@@ -59,6 +59,9 @@ dependencies:
   app_links: ^4.0.0
   flutter_deep_linking: ^0.2.1
   uni_links: ^0.5.1
+  workmanager: ^0.5.2
+  badges: ^3.1.2
+  streaming_shared_preferences: ^2.0.0
 
 dev_dependencies:
   flutter_test:

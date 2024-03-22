@@ -36,12 +36,12 @@ validInput({
     }
 
     if (type == InputType.name) {
-      if (!GetUtils.isAlphabetOnly(val)) {
+      if ((GetUtils.isNumericOnly(val))) {
         return "not valid name";
       }
     }
     if (type == InputType.FamilyName) {
-      if (!GetUtils.isAlphabetOnly(val)) {
+      if ((GetUtils.isNumericOnly(val))) {
         return "not valid familyName";
       }
     }
@@ -67,7 +67,7 @@ validInput({
       return "can't be larger than $max";
     }
     if (type == InputType.userName) {
-      if (!GetUtils.isUsername(val)) {
+      if ((GetUtils.isNumericOnly(val))) {
         return "not valid username";
       }
     }

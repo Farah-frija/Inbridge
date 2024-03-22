@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:inbridge/Sprints/taskManagement/models/projectmodel.dart';
 
 class User {

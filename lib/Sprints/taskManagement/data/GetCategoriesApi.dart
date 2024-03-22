@@ -1,7 +1,18 @@
-class UserListApi {
-  static Future<Either<StatusRequest, List<User>>> getUsers() async {
+import 'dart:convert'; // Si vous récupérez des données JSON
+import 'package:dartz/dartz.dart';
+import 'package:http/http.dart' as http;
+import 'package:inbridge/Sprints/auth/linkApi.dart';
+import 'package:inbridge/Sprints/taskManagement/models/CategoriesModel.dart';
+import 'package:inbridge/core/network/checkInternet.dart';
+import 'package:inbridge/core/network/networkHandler.dart';
+// Si vous récupérez des données via HTTP
+// Assurez-vous d'importer votre modèle User
+
+class CategoriesApi {
+  static Future<Either<StatusRequest, List<Categorie>>>
+      getAllCategories() async {
     // Remplacez cette URL par l'URL de votre API
-    final String apiUrl = AppLink.getAllUsers;
+    final String apiUrl = AppLink.getAllCategories;
 
     try {
       if (await checkInternet()) {
@@ -14,10 +25,9 @@ class UserListApi {
           final List<dynamic> jsonData = jsonDecode(response.body);
 
           // Convertissez les données JSON en une liste d'objets User
-          List<User> users = jsonData.map((data) {
-            print('User Data: $data');
+          List<Categorie> categories = jsonData.map((data) {
             try {
-              print('user ${User.fromJson(data)}');
+              print('categorie ${Categorie.fromJson(data)}');
             } catch (error) {
               // Handle the error appropriately
               print('Error parsing JSON data: $error');
@@ -25,12 +35,12 @@ class UserListApi {
               // throw error;
             }
 
-            return User.fromJson(data);
+            return Categorie.fromJson(data);
           }).toList();
-          print(users);
+          print(categories);
 
           // Retournez la liste des utilisateurs
-          return Right(users);
+          return Right(categories);
         }
         // Si la requête n'a pas réussi, lancez une exception avec le message d'erreur
         if (response.statusCode == 404) {

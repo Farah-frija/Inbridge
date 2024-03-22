@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:inbridge/Sprints/auth/linkApi.dart';
 import 'package:inbridge/Sprints/taskManagement/controllers/addTaskController.dart';
 import 'package:inbridge/core/Functions/AlertQuit.dart';
 import 'package:inbridge/core/Widgets/NextButton.dart';
@@ -60,6 +59,9 @@ class AddTaskScreen extends StatelessWidget {
                                     onChanged: (String? newValue) {
                                       // Handle when an item is selected
                                       print(newValue);
+                                      controller.selectedcategoryIndex.value =
+                                          controller.categories
+                                              .indexOf(newValue);
                                       controller.setCategory(newValue);
                                       print(controller.category.value);
                                     },
@@ -140,6 +142,7 @@ class AddTaskScreen extends StatelessWidget {
                                       ),
                                       child: TextButton(
                                         onPressed: () {
+                                          controller.GetUsers();
                                           Get.toNamed(AppRoute.listOfOptions);
                                         },
                                         child: Text(
@@ -168,6 +171,7 @@ class AddTaskScreen extends StatelessWidget {
                                 controller.onPressed();
                               },
                             )),
+                            SizedBox(height: 40),
                           ]),
                     )))));
   }

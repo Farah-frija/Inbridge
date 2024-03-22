@@ -13,7 +13,7 @@ import 'package:inbridge/core/constant/Themes/paddings/Paddings.dart';
 import 'package:inbridge/core/network/networkHandler.dart'; // Import Get package
 
 class ListOfOptionsScreen extends StatelessWidget {
-  final AddTaskController controller = Get.put(AddTaskController());
+  final AddTaskController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
