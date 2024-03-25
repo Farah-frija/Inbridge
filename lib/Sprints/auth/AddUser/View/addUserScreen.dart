@@ -42,7 +42,12 @@ class AddUseScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Center(child: ChangeCamera()),
+                            Center(
+                                child: Obx(() => ChangeCamera(
+                                    imageFile: controller.imageFile.value,
+                                    onPressed: () {
+                                      controller.cam!.onpressed(context);
+                                    }))),
                             SizedBox(height: 30.0),
                             CustomTextField(
                               isNumber: false,

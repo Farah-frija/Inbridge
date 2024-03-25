@@ -15,20 +15,21 @@ import 'package:inbridge/core/Utils/Camera.dart';
 import 'package:inbridge/core/Widgets/CircleAvatar.dart';
 
 class ChangeCamera extends StatelessWidget {
-  final ImagePicker _picker = ImagePicker();
-
+  ChangeCamera({
+    required this.imageFile,
+    required this.onPressed,
+  });
+  //final ImagePicker _picker = ImagePicker();
+  File? imageFile;
+  Function()? onPressed;
   Widget build(BuildContext context) {
-    AddUseController controller = Get.put(AddUseController());
     return InkWell(
-      onTap: () {
-        print("tapped");
-        controller.cam!.onpressed(context);
-      },
+      onTap: onPressed,
       child: SizedBox(
         child: Stack(children: [
           Avatar(
             image: true,
-            photo: controller.imageFile.value,
+            photo: imageFile,
             radius: MediaQuery.of(context).size.width * 0.2 > 80
                 ? MediaQuery.of(context).size.width * 0.1
                 : MediaQuery.of(context).size.width * 0.18,

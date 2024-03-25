@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ import 'package:inbridge/Sprints/auth/Users/data/updateUserStateApi.dart';
 
 import 'package:inbridge/Sprints/auth/Users/model/UserModel.dart';
 import 'package:inbridge/Sprints/auth/linkApi.dart';
+import 'package:inbridge/core/Utils/Camera.dart';
 import 'package:inbridge/core/network/networkHandler.dart';
 import 'package:inbridge/core/services/services.dart';
 import 'package:inbridge/test/modules/users.dart';
@@ -20,6 +22,9 @@ class UsersControllerImp extends UsersController {
   late RxList<User> users; // Using Rx for reactivity
   late Rx<StatusRequest> statusRequest;
   late Rx<TextEditingController> searchWord;
+  Camera? cam;
+  Rx<File?> imageFile = Rx<File?>(null);
+
   // Using Rx for reactivity
   @override
   void onInit() {
@@ -28,6 +33,7 @@ class UsersControllerImp extends UsersController {
     users = <User>[].obs;
     statusRequest = StatusRequest.none.obs;
     searchWord = TextEditingController().obs;
+    cam = Camera(updateimage);
     GetUsers();
   }
 
@@ -94,6 +100,16 @@ class UsersControllerImp extends UsersController {
   @override
   void dispose() {
     super.dispose();
+  }
+
+  void updateimage(File? image) {
+    imageFile.value = image;
+  }
+
+  void updateProfilePhoto(context, index) {
+    cam!.onpressed(context);
+
+    //users.value[index].photoDeProfile =
   }
 
   @override

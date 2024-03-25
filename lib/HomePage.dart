@@ -5,6 +5,7 @@ import 'package:inbridge/Sprints/auth/Users/views/UsersListScreen.dart';
 import 'package:inbridge/Sprints/auth/login/Views/loginScreen.dart';
 import 'package:inbridge/Sprints/taskManagement/views/TasksList.dart';
 import 'package:inbridge/Sprints/taskManagement/views/addTaskScreen.dart';
+import 'package:inbridge/Sprints/taskManagement/views/taskDetails.dart';
 import 'package:inbridge/core/constant/Themes/Colors/colors.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:inbridge/core/services/services.dart';
@@ -90,8 +91,8 @@ class MyNavigationController extends GetxController {
   List<Widget> pages = [
     Login(),
     TasksList(),
-    AddTaskScreen(),
-    UsersListScreen()
+    UsersListScreen(),
+    TaskDetailsBottomSheet(),
   ];
   void changePage(int index) {
     currentIndex.value = index;

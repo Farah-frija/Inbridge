@@ -137,10 +137,12 @@ class UserTile extends StatelessWidget {
                                 ))
                             : SizedBox(),
                     SizedBox(width: 20),
-                    Icon(
-                      Icons.more_vert,
-                      color: kblue,
-                    ),
+                    IconButton(
+                        icon: Icon(Icons.more_vert),
+                        color: kblue,
+                        onPressed: () {
+                          _showBottomSheet(context);
+                        }),
                   ],
                 ),
               ),
@@ -148,6 +150,40 @@ class UserTile extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  void _showBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          padding: EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              GestureDetector(
+                onTap: null,
+                child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.edit, color: KroseClair),
+                      SizedBox(width: 20),
+                      Text("Edit profile info", style: kemail)
+                    ]),
+              ),
+              SizedBox(height: 10),
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Icon(Icons.photo, color: KroseClair),
+                SizedBox(width: 20),
+                Text("Edit profile photo", style: kemail)
+              ])
+            ],
+          ),
+        );
+      },
     );
   }
 }

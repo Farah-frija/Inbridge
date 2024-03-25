@@ -1,24 +1,24 @@
 import 'package:inbridge/Sprints/taskManagement/models/projectmodel.dart';
 
 class User {
-  final String id;
-  final String photoDeProfile;
-  final String email;
-  final String pseudo;
-  final String role;
-  final int? cin;
-  final String? sexe;
-  final String? adresse;
-  final int? numeroDeTel;
-  final bool bloque;
-  final DateTime? dateDeNaissance;
-  final String nom;
-  final String prenom;
-  final int nombreAvertissement;
-  final bool verifie;
-  final List<Projet>? projets; // Assuming projet IDs are stored as strings
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
+  String id;
+  String photoDeProfile;
+  String email;
+  String pseudo;
+  String role;
+  int? cin;
+  String? sexe;
+  String? adresse;
+  int? numeroDeTel;
+  bool bloque;
+  DateTime? dateDeNaissance;
+  String nom;
+  String prenom;
+  int nombreAvertissement;
+  bool verifie;
+  List<Projet>? projets; // Assuming projet IDs are stored as strings
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   User.oninit({
     this.id = '',

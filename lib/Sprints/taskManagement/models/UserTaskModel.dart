@@ -67,4 +67,12 @@ class TaskView {
       lu: json['lu'],
     );
   }
+  Map<String, dynamic> toJson() {
+    return {
+      '_id': id,
+      'createurDeContenu': createurDeContenu,
+      'vu': vu,
+      'lu': lu,
+    };
+  }
 }

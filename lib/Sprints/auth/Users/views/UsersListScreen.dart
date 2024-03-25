@@ -8,6 +8,7 @@ import 'package:inbridge/core/Widgets/SearchBar.dart';
 import 'package:inbridge/core/Widgets/UserTile.dart';
 import 'package:inbridge/core/constant/Themes/Colors/colors.dart';
 import 'package:inbridge/core/constant/Themes/Icons/icons.dart';
+import 'package:inbridge/core/constant/Themes/TextStyles/TextStyles.dart';
 import 'package:inbridge/core/constant/Themes/paddings/Paddings.dart';
 import 'package:inbridge/core/network/networkHandler.dart'; // Import Get package
 
@@ -61,9 +62,7 @@ class UsersListScreen extends StatelessWidget {
                               children: [
                                 Divider(),
                                 GestureDetector(
-                                  onTap: () {
-                                    // Handle tap on user item, navigate to user details page, etc.
-                                  },
+                                  onTap: () {},
                                   child: UserTile(user: index),
                                 ),
                               ],

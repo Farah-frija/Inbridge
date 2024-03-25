@@ -17,7 +17,7 @@ class AddTaskController extends GetxController {
   late TextEditingController description;
   late TextEditingController guidelines;
   late RxList<String> categories;
-  Rx<DateTime> deadline = DateTime(2002, 8, 25).obs;
+  Rx<DateTime> deadline = DateTime.now().obs;
   late Rx<String?> category;
   late Rx<String?> option = "optional".obs;
   late Rx<String?> selectedUser;
@@ -114,10 +114,12 @@ class AddTaskController extends GetxController {
     print(selectedUser.value);
 
     // Check if any of the text fields are empty
-    if (category.value == null ||
+    if (
+        //category.value == null ||
+
         title.text.isEmpty ||
-        description.text.isEmpty ||
-        guidelines.text.isEmpty) {
+            description.text.isEmpty ||
+            guidelines.text.isEmpty) {
       isValid.value = false;
       // All text fields should be filled
       return "Empty entry(ies)";
@@ -158,7 +160,7 @@ class AddTaskController extends GetxController {
       Tache task = Tache(
           instructions: guidelines.value.text,
           description: description.value.text,
-          categorie: categoriesList.value[selectedcategoryIndex.value!].id,
+          //categorie: categoriesList.value[selectedcategoryIndex.value!].id,
           titre: title.text,
           createurDeContenu: selectedId.value,
           dateLimite: deadline.value,

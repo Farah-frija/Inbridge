@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -17,42 +15,41 @@ class TaskTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ListOfTasksController controller = Get.find();
-    return Obx(
-      () => GestureDetector(
-          onTap: () {
-            controller.mandatoryList.value[index].value.lu = true;
-
-            controller
-                .updateOpenTile(controller.mandatoryList.value[index].value.id);
-          },
-          child: Container(
-            color: !controller.mandatoryList.value[index].value.lu
+    return GestureDetector(
+      onTap: () {
+        print("mlwl haka lu ${controller.mandatoryList.value[index].lu}");
+        if (!controller.mandatoryList.value[index].lu) {
+          controller.mandatoryList.value[index].lu = true;
+          print("baaed lu haka ${controller.mandatoryList.value[index].lu}");
+          controller.updateTile(index, 1);
+          controller.mandatoryList.refresh();
+        }
+      },
+      child: Obx(() => Container(
+            color: !controller.mandatoryList.value[index].lu
                 ? Color.fromARGB(17, 250, 148, 132)
                 : kwhite,
             padding: EdgeInsets.symmetric(vertical: 8, horizontal: 30),
             child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Obx(() => Icon(
-                    controller.mandatoryList.value[index].value.tache.etat ==
+                    controller.mandatoryList.value[index].tache.etat ==
                             TaskState.done
                         ? Icons.done
-                        : controller.mandatoryList.value[index].value.tache
-                                    .etat ==
+                        : controller.mandatoryList.value[index].tache.etat ==
                                 TaskState.pending
                             ? Icons.pending_actions_rounded
-                            : controller.mandatoryList.value[index].value.tache
+                            : controller.mandatoryList.value[index].tache
                                         .etat ==
                                     TaskState.missed
                                 ? Icons.cancel
                                 : null,
-                    color: controller
-                                .mandatoryList.value[index].value.tache.etat ==
+                    color: controller.mandatoryList.value[index].tache.etat ==
                             TaskState.done
                         ? Color.fromARGB(255, 0, 69, 2)
-                        : controller.mandatoryList.value[index].value.tache
-                                    .etat ==
+                        : controller.mandatoryList.value[index].tache.etat ==
                                 TaskState.pending
                             ? KroseClair
-                            : controller.mandatoryList.value[index].value.tache
+                            : controller.mandatoryList.value[index].tache
                                         .etat ==
                                     TaskState.missed
                                 ? Color.fromARGB(255, 171, 22, 22)
@@ -68,12 +65,10 @@ class TaskTile extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           // Adjust the spacing between the icon and text
-                          Text(
-                              controller
-                                  .mandatoryList[index].value.tache.titre!,
+                          Text(controller.mandatoryList[index].tache.titre!,
                               style: ktitleName),
 
-                          !controller.mandatoryList.value[index].value.lu
+                          !controller.mandatoryList.value[index].lu
                               ? Icon(
                                   Icons.circle,
                                   size: 10,

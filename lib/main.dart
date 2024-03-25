@@ -28,7 +28,7 @@ class TabBarDemo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(getPages: routes, home: MyHomePage());
+    return GetMaterialApp(getPages: routes, home: AddUseScreen());
   }
 }
 /*import 'package:flutter/material.dart';
@@ -50,7 +50,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }*/
-
-
-
-// Example Pages

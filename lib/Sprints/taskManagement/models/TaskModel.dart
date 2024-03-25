@@ -4,7 +4,7 @@ import 'package:inbridge/core/Utils/Enums/TaskState.dart';
 class Tache {
   String? instructions;
   String? description;
-  String? categorie;
+  //String? categorie;
   String? titre;
   String? createurDeContenu;
   TaskState? etat;
@@ -14,7 +14,7 @@ class Tache {
   Tache({
     this.instructions,
     this.description,
-    this.categorie,
+    //this.categorie,
     this.titre,
     this.createurDeContenu,
     this.etat,
@@ -26,7 +26,7 @@ class Tache {
     return Tache(
       instructions: json['instructions'],
       description: json['description'],
-      categorie: json['categorie'],
+      // categorie: json['categorie'],
       titre: json['titre'],
       createurDeContenu: json['createurDeContenu'],
       etat: json['etat'] == "fait"
@@ -47,7 +47,7 @@ class Tache {
     final Map<String, dynamic> data = Map<String, dynamic>();
     data['instructions'] = this.instructions;
     data['description'] = this.description;
-    data['categorie'] = this.categorie;
+    // data['categorie'] = this.categorie;
     data['titre'] = this.titre;
     data['createurDeContenu'] = this.createurDeContenu;
     data['etat'] =

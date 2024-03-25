@@ -14,105 +14,97 @@ class TasksList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ListOfTasksController controller = Get.put(ListOfTasksController());
-    return RefreshIndicator(
-        onRefresh: () async {
-          // Fetch the latest data from the database
-          await controller.fetchTask();
-          print("helooo");
-        },
-        child: DefaultTabController(
-            length: 2,
-            // child: RefreshIndicator(
-            //     onRefresh: () async {
-            //       // Fetch the latest data from the database
-            //       await controller.fetchTask();
-            //       print("helooo");
-            //     },
-            child: NestedScrollView(
-              headerSliverBuilder: (context, innerBoxIsScrolled) => [
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(height: 10),
-                        Row(children: [
-                          Expanded(child: MySearchBar(controller: null)),
-                          SizedBox(width: 8),
-                        ]),
-                        SizedBox(height: 30),
-                      ],
-                    ),
-                  ),
+
+    return DefaultTabController(
+        length: 2,
+        // child: RefreshIndicator(
+        //     onRefresh: () async {
+        //       // Fetch the latest data from the database
+        //       await controller.fetchTask();
+        //       print("helooo");
+        //     },
+        child: NestedScrollView(
+          headerSliverBuilder: (context, innerBoxIsScrolled) => [
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 10),
+                    Row(children: [
+                      Expanded(child: MySearchBar(controller: null)),
+                      SizedBox(width: 8),
+                    ]),
+                    SizedBox(height: 30),
+                  ],
                 ),
-                SliverPersistentHeader(
-                  pinned: true,
-                  delegate: ProfileTabbar(
-                    child: Container(
-                      color: Colors.white,
-                      child: TabBar(
-                        controller: controller.tabController,
-                        unselectedLabelStyle: TextStyle(color: KroseClair),
-                        labelColor: Colors.black,
-                        indicatorColor: Color.fromARGB(255, 0, 0, 0),
-                        indicatorSize: TabBarIndicatorSize.tab,
-                        indicatorWeight: 2,
-                        dividerColor: kgrey,
-                        tabs: [
-                          Tab(
-                            child: Obx(() => controller.optionalCount.value != 0
-                                ? badges.Badge(
-                                    badgeStyle: badges.BadgeStyle(
-                                      badgeColor: KRoseFonce,
-                                      padding: EdgeInsets.all(5),
-                                    ),
-                                    position: badges.BadgePosition.topEnd(
-                                        top: -10, end: -15),
-                                    showBadge: true,
-                                    ignorePointer: false,
-                                    badgeContent: Text(controller
-                                        .optionalCount.value
-                                        .toString()),
-                                    child: Text('Optional',
-                                        style: KGalleryPrivate),
-                                  )
-                                : Text('Optional', style: KGalleryPrivate)),
-                          ),
-                          Tab(
-                            child: Obx(() => controller.mandatoryCount.value !=
-                                    0
-                                ? badges.Badge(
-                                    badgeStyle: badges.BadgeStyle(
-                                      badgeColor: KRoseFonce,
-                                      padding: EdgeInsets.all(5),
-                                    ),
-                                    position: badges.BadgePosition.topEnd(
-                                        top: -10, end: -15),
-                                    showBadge: true,
-                                    ignorePointer: false,
-                                    badgeContent: Text(controller
-                                        .mandatoryCount.value
-                                        .toString()),
-                                    child: Text('Mandatory',
-                                        style: KGalleryPrivate),
-                                  )
-                                : Text('Mandatory', style: KGalleryPrivate)),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-              body: TabBarView(
-                controller: controller.tabController,
-                children: [
-                  Optional(),
-                  Mandatory(),
-                ],
               ),
-            )));
+            ),
+            SliverPersistentHeader(
+              pinned: true,
+              delegate: ProfileTabbar(
+                child: Container(
+                  color: Colors.white,
+                  child: TabBar(
+                    controller: controller.tabController,
+                    unselectedLabelStyle: TextStyle(color: KroseClair),
+                    labelColor: Colors.black,
+                    indicatorColor: Color.fromARGB(255, 0, 0, 0),
+                    indicatorSize: TabBarIndicatorSize.tab,
+                    indicatorWeight: 2,
+                    dividerColor: kgrey,
+                    tabs: [
+                      Tab(
+                        child: Obx(() => controller.optionalCount.value != 0
+                            ? badges.Badge(
+                                badgeStyle: badges.BadgeStyle(
+                                  badgeColor: KRoseFonce,
+                                  padding: EdgeInsets.all(5),
+                                ),
+                                position: badges.BadgePosition.topEnd(
+                                    top: -10, end: -15),
+                                showBadge: true,
+                                ignorePointer: false,
+                                badgeContent: Text(
+                                    controller.optionalCount.value.toString()),
+                                child: Text('Optional', style: KGalleryPrivate),
+                              )
+                            : Text('Optional', style: KGalleryPrivate)),
+                      ),
+                      Tab(
+                        child: Obx(() => controller.mandatoryCount.value != 0
+                            ? badges.Badge(
+                                badgeStyle: badges.BadgeStyle(
+                                  badgeColor: KRoseFonce,
+                                  padding: EdgeInsets.all(5),
+                                ),
+                                position: badges.BadgePosition.topEnd(
+                                    top: -10, end: -15),
+                                showBadge: true,
+                                ignorePointer: false,
+                                badgeContent: Text(
+                                    controller.mandatoryCount.value.toString()),
+                                child:
+                                    Text('Mandatory', style: KGalleryPrivate),
+                              )
+                            : Text('Mandatory', style: KGalleryPrivate)),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+          body: TabBarView(
+            controller: controller.tabController,
+            children: [
+              //Optional(),
+              Mandatory(),
+              Mandatory(),
+            ],
+          ),
+        ));
   }
 }
 

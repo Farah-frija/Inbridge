@@ -35,7 +35,7 @@ class AddTaskScreen extends StatelessWidget {
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Container(
+                            /* Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(
                                     10.0), // Set your desired border radius here
@@ -68,7 +68,7 @@ class AddTaskScreen extends StatelessWidget {
                                     // Add a hint to show when no item is selected
                                     hint: Text('Select a category'),
                                   )),
-                            ),
+                            ),*/
                             SizedBox(height: 20),
                             TaskFormFeild(
                                 hint: "title",
