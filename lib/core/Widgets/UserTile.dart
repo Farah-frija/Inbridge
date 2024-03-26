@@ -23,12 +23,12 @@ class UserTile extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _ProfileImage(
-              image:
-                  "${AppLink.server}/${controller.users.value[user].photoDeProfile}",
-              verifie: controller.users.value[user].verifie,
-              role: controller.users.value[user].role,
-            ),
+            Obx(() => _ProfileImage(
+                  image:
+                      "${AppLink.server}/${controller.users.value[user].photoDeProfile}",
+                  verifie: controller.users.value[user].verifie,
+                  role: controller.users.value[user].role,
+                )),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(left: 10, top: 3),
@@ -175,11 +175,17 @@ class UserTile extends StatelessWidget {
                     ]),
               ),
               SizedBox(height: 10),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Icon(Icons.photo, color: KroseClair),
-                SizedBox(width: 20),
-                Text("Edit profile photo", style: kemail)
-              ])
+              InkWell(
+                onTap: () {
+                  controller.updateProfilePhoto(context, user);
+                },
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Icon(Icons.photo, color: KroseClair),
+                  SizedBox(width: 20),
+                  Text("Edit profile photo", style: kemail)
+                ]),
+              )
             ],
           ),
         );

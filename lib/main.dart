@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/get_instance.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:inbridge/HomePage.dart';
 import 'package:inbridge/Sprints/auth/AddUser/View/addUserScreen.dart';
@@ -8,6 +10,7 @@ import 'package:inbridge/Sprints/taskManagement/views/TasksList.dart';
 import 'package:inbridge/Sprints/taskManagement/views/addTaskScreen.dart';
 import 'package:inbridge/core/Widgets/ListOfMandatoryTasks.dart';
 import 'package:inbridge/core/constant/Themes/Colors/colors.dart';
+import 'package:inbridge/core/services/AppLinksDeep.dart';
 import 'package:inbridge/core/services/periodicTimer.dart';
 import 'package:inbridge/core/services/services.dart';
 import 'package:badges/badges.dart' as badges;
@@ -18,17 +21,18 @@ import 'core/Widgets/FilterUser.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Get.put<AppLinksDeepLink>(AppLinksDeepLink.instance);
+
   await initialServices();
   startPeriodicTimer();
   runApp(TabBarDemo());
+  AppLinksDeepLink.instance.initDeepLinks();
 }
 
 class TabBarDemo extends StatelessWidget {
-  TabBarDemo({super.key});
-
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(getPages: routes, home: AddUseScreen());
+    return GetMaterialApp(getPages: routes, home: Login());
   }
 }
 /*import 'package:flutter/material.dart';

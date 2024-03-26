@@ -12,5 +12,7 @@ enum StatusRequest {
   notFound,
   unknownFailure,
   existent,
-  invalidinfo
+  invalidinfo,
+  senderror,
+  verifyEmail
 }

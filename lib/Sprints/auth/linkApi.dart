@@ -7,6 +7,8 @@ class AppLink {
   static const String login = "$server/api/auth/login/";
   static const String getAllUsers = "$server/api/users/";
   static const String UpdateUserState = "$server/api/users/";
+  static const String UpdatePhoto = "$server/api/users/photo/";
+  static const String AccountVerification = "$server/api/auth/verifyemail";
 
 // ================================= TaskManagement ========================== //
 

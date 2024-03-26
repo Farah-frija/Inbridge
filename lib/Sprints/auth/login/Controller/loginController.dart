@@ -97,32 +97,40 @@ class LoginControllerImp extends LoginController {
 // Set the step to "2"
         myServices.sharedPreferences.setString("step", "2");
       } else {
+        bool warning = false;
         String errorMessage = "";
         switch (statusRequest.value) {
           case StatusRequest.wrongMotdepasse:
+            warning = true;
             errorMessage = "Wrong password password";
             break;
 
           case StatusRequest.accountBlocked:
+            warning = true;
             errorMessage = "Access forbidden. Account blocked.";
             break;
           case StatusRequest.nonExistent:
+            warning = true;
             errorMessage = "Non existent user";
+            break;
+          case StatusRequest.invalidinfo:
+            Get.toNamed(AppRoute.VerifyEmail);
             break;
 
           default:
             if (StatusRequest.wrongMotdepasse == statusRequest) {
+              warning = true;
               errorMessage = "User wrong motdepasse";
             }
         }
-
-        Get.defaultDialog(
-          title: "Warning",
-          middleText: errorMessage,
-          onConfirm: () {
-            Get.back();
-          },
-        );
+        if (warning)
+          Get.defaultDialog(
+            title: "Warning",
+            middleText: errorMessage,
+            onConfirm: () {
+              Get.back();
+            },
+          );
       }
     }
   }

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:inbridge/Sprints/auth/Functions/validateInput.dart';
-import 'package:inbridge/Sprints/auth/login/Controller/ForgotPasswordController.dart';
+
+import 'package:inbridge/Sprints/auth/login/Controller/LinkVerificationController.dart';
 import 'package:inbridge/Sprints/auth/widgets/CustomTextField.dart';
 import 'package:inbridge/core/Utils/Enums/inputType.dart';
 import 'package:inbridge/core/constant/Themes/Colors/colors.dart';
@@ -16,76 +17,97 @@ class ForgotPasswordPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(() => PasswordControllerImp());
+    LinkVerificationControllerImp controller =
+        Get.put(LinkVerificationControllerImp());
 
     return SafeArea(
       child: Scaffold(
-          appBar: AppBar(
-            shadowColor: kgrey,
-            scrolledUnderElevation: 0.5,
-            elevation: 0.5,
-            title: Text("Forgot Password"),
-            centerTitle: true,
-          ),
-          body: GetBuilder<PasswordControllerImp>(
-            builder: (controller) => Form(
-              key: controller.formstate,
-              child: Center(
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 50),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        Center(
-                          child: Logo(),
-                        ),
-                        SizedBox(height: 30.0),
-                        CustomTextField(
+        appBar: AppBar(
+          shadowColor: kgrey,
+          scrolledUnderElevation: 0.5,
+          elevation: 0.5,
+          title: Text("Enter your Password"),
+          centerTitle: true,
+        ),
+        body: Form(
+          child: Center(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 50),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Center(
+                      child: Logo(),
+                    ),
+                    SizedBox(height: 30.0),
+                    Obx(() => TextFormField(
+                          //validator: valid,
+                          obscureText: !controller.visible.value,
+                          controller: controller.password,
+                          decoration: InputDecoration(
+                              hintText: "password",
+                              filled: true,
+                              fillColor: Ktextfieldbg,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30.0),
+                                borderSide: BorderSide.none,
+                              ),
+                              hintStyle: khint,
+                              suffixIcon: IconButton(
+                                onPressed: () {
+                                  controller.setVisible();
+                                },
+                                icon: controller.visible.value
+                                    ? Icon(Icons.visibility)
+                                    : Icon(Icons.visibility_off),
+                              )),
+                        )),
+                    /*CustomTextField(
                             valid: (val) {
                               return validInput(
                                   val: val!,
-                                  min: 10,
-                                  max: 30,
-                                  type: InputType.email);
+                                  min: 8,
+                                  max: 15,
+                                  type: InputType.password);
                             },
                             isNumber: false,
-                            hint: 'Email',
+                            hint: 'Enter your password',
                             isPassword: false,
-                            textController: controller.email),
-                        SizedBox(height: 20.0),
-                        SizedBox(height: 30.0),
-                        LoginButton(
-                          text: "Verify",
-                          onpressed: () {
-                            controller.verify();
-                          },
-                        ),
-                        SizedBox(height: 30.0),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 40),
-                          child: Text(
-                            "new password will be sent to this Email address.",
-                            style: kremark,
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        SizedBox(height: 20.0),
-                        BackToPage(
-                          text: 'have an account? ',
-                          text2: "LogIn",
-                          onpressed: () {
-                            controller.GoToLogin();
-                          },
-                        ),
-                      ],
+                            textController: controller.password),*/
+                    SizedBox(height: 20.0),
+                    SizedBox(height: 30.0),
+                    LoginButton(
+                      text: "Verify",
+                      onpressed: () {
+                        //controller.verify();
+                      },
                     ),
-                  ),
+                    SizedBox(height: 30.0),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 40),
+                      child: Text(
+                        "new password will be sent to this Email address.",
+                        style: kremark,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    SizedBox(height: 20.0),
+                    BackToPage(
+                      text: 'have an account? ',
+                      text2: "LogIn",
+                      onpressed: () {
+                        //controller.GoToLogin();
+                      },
+                    ),
+                  ],
                 ),
               ),
             ),
-          )),
+          ),
+        ),
+      ),
     );
   }
 }

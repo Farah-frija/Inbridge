@@ -6,12 +6,12 @@ LoginModel LoginModelFromJson(String str) =>
 String LoginModelToJson(LoginModel data) => json.encode(data.toJson());
 
 class LoginModel {
-  String email;
-  String motdepasse;
+  String? email;
+  String? motdepasse;
 
   LoginModel({
-    required this.email,
-    required this.motdepasse,
+    this.email,
+    this.motdepasse,
   });
 
   factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(

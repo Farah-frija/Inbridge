@@ -3,8 +3,6 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:inbridge/Sprints/auth/Functions/validateInput.dart';
 import 'package:inbridge/Sprints/auth/VerifyEmail/controllers/VerifyEmailController.dart';
-import 'package:inbridge/Sprints/auth/login/Controller/ForgotPasswordController.dart';
-import 'package:inbridge/Sprints/auth/login/Controller/loginController.dart';
 import 'package:inbridge/Sprints/auth/widgets/CustomTextField.dart';
 import 'package:inbridge/core/Utils/Enums/inputType.dart';
 import 'package:inbridge/core/constant/Themes/Colors/colors.dart';

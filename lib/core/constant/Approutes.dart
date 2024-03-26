@@ -5,4 +5,5 @@ class AppRoute {
   static String VerifyEmail = "/verifyEmail";
   static String listOfOptions = "/ListOfOptionsScreen";
   static String addTask = "/AddTaskScreen";
+  static String failure = "/FailureScreen";
 }

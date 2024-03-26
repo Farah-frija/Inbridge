@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:inbridge/Sprints/auth/Users/data/UpdateUserPhotoApi.dart';
 import 'package:inbridge/Sprints/auth/Users/data/UsersListApi.dart';
 import 'package:inbridge/Sprints/auth/Users/data/updateUserStateApi.dart';
 
 import 'package:inbridge/Sprints/auth/Users/model/UserModel.dart';
 import 'package:inbridge/Sprints/auth/linkApi.dart';
 import 'package:inbridge/core/Utils/Camera.dart';
+import 'package:inbridge/core/constant/Themes/Colors/colors.dart';
 import 'package:inbridge/core/network/networkHandler.dart';
 import 'package:inbridge/core/services/services.dart';
 import 'package:inbridge/test/modules/users.dart';
@@ -21,19 +23,23 @@ class UsersControllerImp extends UsersController {
   late RxString errorMessage;
   late RxList<User> users; // Using Rx for reactivity
   late Rx<StatusRequest> statusRequest;
+  late Rx<StatusRequest> statusRequestPhoto;
   late Rx<TextEditingController> searchWord;
   Camera? cam;
   Rx<File?> imageFile = Rx<File?>(null);
+  late Rx<int> user;
 
   // Using Rx for reactivity
   @override
   void onInit() {
     super.onInit();
+    user = 0.obs;
     errorMessage = "".obs;
     users = <User>[].obs;
     statusRequest = StatusRequest.none.obs;
+    statusRequestPhoto = StatusRequest.none.obs;
     searchWord = TextEditingController().obs;
-    cam = Camera(updateimage);
+
     GetUsers();
   }
 
@@ -99,17 +105,23 @@ class UsersControllerImp extends UsersController {
 
   @override
   void dispose() {
+    imageFile.close();
     super.dispose();
   }
 
   void updateimage(File? image) {
     imageFile.value = image;
+    print(image);
+    print("===============update===============");
+    updatePhoto(user.value!);
+    imageFile.value = null;
   }
 
-  void updateProfilePhoto(context, index) {
-    cam!.onpressed(context);
+  void updateProfilePhoto(context, int ind) {
+    user.value = ind;
+    cam = Camera(updateimage);
 
-    //users.value[index].photoDeProfile =
+    cam!.onpressed(context);
   }
 
   @override
@@ -156,5 +168,67 @@ class UsersControllerImp extends UsersController {
       // Handle exception
       statusRequest.value = StatusRequest.unknownFailure;
     }
+  }
+
+  void updatePhoto(int number) async {
+    print("=======================upload========");
+
+    // Rx<String?> message = null.obs;
+    // Rx<String> title = "error".obs;
+    statusRequestPhoto.value = StatusRequest.loading;
+    //message.value = "loading";
+    Color color = KRoseFonce;
+    String link = '${AppLink.UpdatePhoto}${users.value[number].id}';
+    var response = await UploadImageApi.postData(link, imageFile.value!);
+    print("=============================== Controller  ");
+
+    response.fold(
+      (status) {
+        statusRequestPhoto.value = status;
+        print(status);
+        // Handle left (error) case
+        switch (statusRequest) {
+          case StatusRequest.notFound:
+            print("not found");
+            break;
+          case StatusRequest.nonExistent:
+            print("non existant");
+            break;
+          case StatusRequest.serverFailure:
+            //message.value = "an error has occured";
+            break;
+          case StatusRequest.offlineFailure:
+            //message.value = "lost connection";
+            break;
+          case StatusRequest.unknownFailure:
+            print("unexpected error");
+            break;
+          default:
+            break;
+        }
+      },
+      (success) {
+        users.value[number].photoDeProfile = success;
+        print(users.value[number].photoDeProfile);
+        statusRequestPhoto.value = StatusRequest.success;
+        color = Colors.green;
+        //title.value = "success";
+        // message.value = "photo updated with success";
+        Get.snackbar("success ", "photo updated with success",
+            colorText: Colors.white, backgroundColor: color);
+        print("updated photo with success");
+
+        users.refresh();
+      },
+    );
+
+    /* Obx(() {
+      if (message != null) {
+        Get.snackbar(title.value, message.value!,
+            colorText: Colors.white, backgroundColor: color);
+      }
+      return SizedBox.shrink();
+    });*/
+    imageFile.value = null;
   }
 }

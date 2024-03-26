@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void startPeriodicTimer() {
   Timer(Duration(seconds: 1), () {
-    const Duration updateInterval = Duration(seconds: 100);
+    const Duration updateInterval = Duration(seconds: 1000);
     // Create a periodic timer with an interval of 10 seconds
     Timer.periodic(updateInterval, (Timer timer) async {
       print('First timer fired');

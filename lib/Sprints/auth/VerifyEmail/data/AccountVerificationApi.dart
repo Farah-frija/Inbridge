@@ -1,18 +1,16 @@
 import 'dart:convert';
-// ignore: depend_on_referenced_packages
-import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
-import 'package:inbridge/Sprints/auth/login/data/models/loginModel.dart';
+import 'package:dartz/dartz.dart';
 import 'package:inbridge/core/network/checkInternet.dart';
 import 'package:inbridge/core/network/networkHandler.dart';
 
-class LoginApi {
-  Future<Either<StatusRequest, Map>> postData(
-      String linkurl, LoginModel data) async {
+class AccountVerificationApi {
+  static Future<Either<StatusRequest, Map>> postData(
+      String linkurl, String email) async {
     try {
       if (await checkInternet()) {
-        print("dkhal");
-        var response = await http.post(Uri.parse(linkurl), body: data.toJson());
+        var response =
+            await http.post(Uri.parse(linkurl), body: {'email': email});
         print("aana response");
         print(response.statusCode);
         if (response.statusCode == 200 || response.statusCode == 201) {
@@ -31,8 +29,8 @@ class LoginApi {
           String errorMessage = jsonDecode(response.body);
           print(errorMessage);
           switch (errorMessage) {
-            case "invalid email and motdepasse":
-              print("Error: Invalid email and motdepasse");
+            case "invalid email":
+              print("Error: Invalid email ");
               return Left(StatusRequest.invalidEmailAndPassword);
 
             case "Access forbidden. Account blocked.":
@@ -41,12 +39,12 @@ class LoginApi {
             case "non existant user":
               print("Error: Non-existent");
               return Left(StatusRequest.nonExistent);
-            case "user wrong motdepasse":
-              print("Error: User wrong motdepasse");
-              return Left(StatusRequest.wrongMotdepasse);
-            case "please verify your account":
+            case "email n'a pas été envoyé à l'utilisateur":
+              print("email n'a pas été envoyé à l'utilisateur");
+              return Left(StatusRequest.senderror);
+            case "Email verified please login":
               print("Error: please verify your account");
-              return Left(StatusRequest.invalidinfo);
+              return Left(StatusRequest.verifyEmail);
             default:
               print("Error: Server Failure");
               return Left(StatusRequest.serverFailure);
